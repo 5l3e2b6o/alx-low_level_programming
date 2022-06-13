@@ -14,7 +14,7 @@ int b;
 for (b = 0; str[b] != '\0'; b++)
 {
 if (b % 2 == 0)
-_putchar (str[b]);
+putchar (str[b]);
 }
 
 _putchar ('\n');
