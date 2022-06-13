@@ -17,5 +17,5 @@ if (b % 2 == 0)
 putchar (str[b]);
 }
 
-_putchar ('\n');
+putchar ('\n');
 }

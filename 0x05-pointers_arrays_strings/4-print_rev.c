@@ -21,5 +21,5 @@ for (b = b - 1 ; b >= 0; b--)
 putchar (s[b]);
 }
 
-_putchar ('\n');
+putchar ('\n');
 }
