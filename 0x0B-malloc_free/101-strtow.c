@@ -1,43 +1,74 @@
 #include "main.h"
+#include <stdlib.h>
+
 /**
- * argstostr - prints args
- * @ac: takes in width of grid
- * @av: height of grid
- * Return: the args one line at a time
+ * wrdcnt - counts the number of words in a string
+ * @s: string
+ * Return: int of number of words
  */
-
-char *argstostr(int ac, char **av)
+int wrdcnt(char *s)
 {
-	char *str;
-	int count = 0, a = 0, b = 0, c = 0;
+	int i, n = 0;
 
-	if (ac == 0 || av == NULL)
-		return (NULL);
-	while (a < ac)
+	for (i = 0; s[i]; i++)
 	{
-		b = 0;
-		while (av[a][b] != '\0')
+		if (s[i] == ' ')
 		{
-			count++;
-			b++;
+			if (s[i + 1] != ' ' && s[i + 1] != '\0')
+				n++;
 		}
-		a++;
+		else if (i == 0)
+			n++;
 	}
-	count = count + ac + 1;
-	str = malloc(sizeof(char) * count);
-	if (str == NULL)
-	{
+	n++;
+	return (n);
+}
+
+/**
+ * strtow - splits a string into words
+ * @str: string
+ * Return: pointer to an array of strings
+ */
+char **strtow(char *str)
+{
+	int i, j, k, l, n = 0, ch = 0;
+	char **x;
+
+	if (str == NULL || *str == '\0')
 		return (NULL);
-	}
-	for (a = 0; a < ac; a++)
+	n = wrdcnt(str);
+	if (n == 1)
+		return (NULL);
+	 x = (char **)malloc(n * sizeof(char *));
+	if (x == NULL)
+		return (NULL);
+	x[n - 1] = NULL;
+	i = 0;
+	while (str[i])
 	{
-		for (b = 0; av[a][b] != '\0'; b++)
+		if (str[i] != ' ' && (i == 0 || str[i - 1] == ' '))
 		{
-			str[c] = av[a][b];
-			c++;
+			for (j = 1; str[i + j] != ' ' && str[i + j]; j++)
+				;
+			j++;
+			x[ch] = (char *)malloc(j * sizeof(char));
+			j--;
+			if (x[ch] == NULL)
+			{
+				for (k = 0; k < ch; k++)
+					free(x[k]);
+				free(x[n - 1]);
+				free(x);
+				return (NULL);
+			}
+			for (l = 0; l < j; l++)
+				x[ch][l] = str[i + l];
+			x[ch][l] = '\0';
+			ch++;
+			i += j;
 		}
-		str[c] = '\n';
-		c++;
+		else
+			i++;
 	}
-	return (str);
+	return (x);
 }
